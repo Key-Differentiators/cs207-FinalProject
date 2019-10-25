@@ -4,9 +4,9 @@
 
 [![Coverage Status](https://codecov.io/gh/Key-Differentiators/cs207-FinalProject/branch/master/graph/badge.svg)](https://codecov.io/gh/dsondak/cs207testing)
 
-Group number: 
+Group number: 23
 
 Members:
-Kate Grosch
-Spencer Penn
-Mingyue Wei
+- Kate Grosch
+- Spencer Penn
+- Mingyue Wei
