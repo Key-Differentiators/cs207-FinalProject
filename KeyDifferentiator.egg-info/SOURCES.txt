@@ -3,4 +3,7 @@ setup.py
 KeyDifferentiator.egg-info/PKG-INFO
 KeyDifferentiator.egg-info/SOURCES.txt
 KeyDifferentiator.egg-info/dependency_links.txt
+KeyDifferentiator.egg-info/requires.txt
 KeyDifferentiator.egg-info/top_level.txt
+tests/AD_test.py
+tests/__init__.py

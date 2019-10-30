@@ -8,6 +8,6 @@ before_install:
 install:
 	- pip install -r requirements.txt
 script:
-    - pytest --cov=AD /tests
+    - pytest --cov=AD
 after_success:
     - codecov

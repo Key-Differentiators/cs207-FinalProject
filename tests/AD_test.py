@@ -1,7 +1,7 @@
 # AD_test.py
 
 import pytest
-from AD import AD
+from src.AD import AD
 
 def test_add():
 	x = AD.AD(2.0) + AD.AD(1.0)
