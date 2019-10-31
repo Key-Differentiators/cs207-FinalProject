@@ -37,7 +37,10 @@ class AD():
 			return AD(self.val - other, self.der)
 
 	def __rsub__(self, other):
-		return self.__sub__(other)
+		try:
+			return AD(self.val -  other.val, self.der -  other.der)
+		except AttributeError:
+			return AD(other - self.val, self.der)
 		
 	def __truediv__(self, other):
 		try:
