@@ -12,7 +12,7 @@ class AD():
 		return "f(x)= %s f'(x) %s" % (str(self.val), str(self.der))
 
 	def __eq__(self, other):
-		return (self.val == other.val)
+		return (self.val == other.val and self.der == other.der)
 
 	def __add__(self, other):
 		try:
@@ -62,20 +62,29 @@ class AD():
 	def __rpow__(self, pow):
 		return AD(pow**self.val, np.log(pow) * (pow**self.val)  * self.der)
 
-	def log(x):
-		return NotImplementedError
-
 	def ln(x):
-		return NotImplementedError
+		try:
+			return AD(np.log(x.val), x.der / x.val)
+		except:
+			return np.log(x)
 
 	def sqrt(x):
-		return NotImplementedError
+		try:
+			return AD(np.sqrt(x.val), x.der * 1 / (2 * np.sqrt(x.val)))
+		except AttributeError:
+			return np.sqrt(x)
 
 	def sin(x):
-		return NotImplementedError
+		try:
+			return AD(np.sin(x.val), x.der * np.cos(x.val))
+		except AttributeError:
+			return np.sin(x)
 
 	def cos(x):
-		return NotImplementedError
+		try:
+			return AD(np.cos(x.val), -(x.der * np.sin(x.val)))
+		except AttributeError:
+			return np.cos(x)
 
 	def tan(x):
 		return NotImplementedError

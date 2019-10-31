@@ -1,6 +1,7 @@
 # AD_test.py
 
 import pytest
+import numpy as np
 from src.AD import AD
 
 def test_add():
@@ -52,6 +53,26 @@ def test_rpow():
 	x = 2**AD.AD(2.0)
 	y = AD.AD(4.0)
 	assert(x == y)
+
+def test_sqrt_AD():
+	x = sqrt(AD.AD(4.0))
+	y = AD.AD(2.0)
+	assert (x == y)
+
+def test_sqrt_num():
+	assert(sqrt(4.0) == np.sqrt(4.0))
+
+# def test_ln_AD():
+
+# def test_ln_num():
+
+# def test_sin_AD():
+
+# def test_sin_num():
+
+# def test_cos_AD():
+
+# def test_cos_num():
 
 def test_add_radd_mult_rmult():
 	x = AD.AD(2.0)
