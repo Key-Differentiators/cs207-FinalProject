@@ -1,5 +1,7 @@
 # AD.py
 
+import numpy as np
+
 class AD():
 
 	def __init__(self, val, der=1.0):
@@ -52,10 +54,13 @@ class AD():
 		return AD(other / self.val, -(other * self.der) / self.val ** 2)
 
 	def __pow__(self, pow):
-		return NotImplementedError
+		try:
+			return AD(self.val**pow.val, self.val**pow.val*(self.der*(pow.val/self.val)+pow.der * np.log(self.val)))
+		except AttributeError:
+			return AD(self.val**pow, pow * self.val * self.der)
 
 	def __rpow__(self, pow):
-		return NotImplementedError
+		return AD(pow**self.val, np.log(pow) * (pow**self.val)  * self.der)
 
 	def log(x):
 		return NotImplementedError

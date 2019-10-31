@@ -43,6 +43,16 @@ def test_rtruediv():
 	y = AD.AD(2.0)
 	assert(x == y)
 
+def test_pow():
+	x = AD.AD(2.0)**2
+	y = AD.AD(4.0)
+	assert(x == y)	
+
+def test_rpow():
+	x = 2**AD.AD(2.0)
+	y = AD.AD(4.0)
+	assert(x == y)
+
 def test_add_radd_mult_rmult():
 	x = AD.AD(2.0)
 	alpha = 2.0
