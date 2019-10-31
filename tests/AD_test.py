@@ -23,6 +23,26 @@ def test_rmult():
 	y = AD.AD(2.0)
 	assert(x == y)
 
+def test_sub():
+	x = AD.AD(2.0) - AD.AD(1.0)
+	y = AD.AD(1.0)
+	assert(x == y)
+
+def test_rsub():
+	x = 2 - AD.AD(1.0)
+	y = AD.AD(1.0)
+	assert(x == y)
+
+def test_truediv():
+	x = AD.AD(2.0) / AD.AD(1.0)
+	y = AD.AD(2.0)
+	assert(x == y)
+
+def test_rtruediv():
+	x = 2 / AD.AD(1.0)
+	y = AD.AD(2.0)
+	assert(x == y)
+
 def test_add_radd_mult_rmult():
 	x = AD.AD(2.0)
 	alpha = 2.0

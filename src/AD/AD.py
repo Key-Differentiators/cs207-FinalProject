@@ -14,7 +14,7 @@ class AD():
 
 	def __add__(self, other):
 		try:
-			return AD(self.val + other.val, self.der)
+			return AD(self.val + other.val, self.der + other.der)
 		except AttributeError:
 			return AD(self.val + other, self.der)
 
@@ -31,16 +31,22 @@ class AD():
 		return self.__mul__(other)
 
 	def __sub__(self, other):
-		return NotImplementedError
+		try:
+			return AD(self.val - other.val, self.der - other.der)
+		except AttributeError:
+			return AD(self.val - other, self.der)
 
 	def __rsub__(self, other):
-		return NotImplementedError
+		return self.__sub__(other)
 		
 	def __truediv__(self, other):
-		return NotImplementedError
+		try:
+			return AD(self.val / other.val, (self.der * other.val - self.val * other.der)/(other.val)**2)
+		except AttributeError:
+			return AD(self.val / other, self.der / other)
 
 	def __rtruediv__(self, other):
-		return NotImplementedError
+		return AD(other / self.val, -(other * self.der) / self.val ** 2)
 
 	def __pow__(self, pow):
 		return NotImplementedError
