@@ -93,3 +93,16 @@ def test_add_radd_mult_rmult():
 	for (name, val) in functions:
 		assert (val.val == 7)
 		assert (val.der == 2)
+
+def test_linear_combos():
+	x = AD.AD(3.0)
+	eq = x**2 + x
+	y = AD.AD(12.0, 7.0)
+	assert(eq == y)
+
+def test_identity():
+	x = AD.AD(3.0)
+	eq = (2 * x) / (2 * x)
+	y = AD.AD(1.0, 0.0)
+	assert(eq == y)
+

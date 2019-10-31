@@ -33,3 +33,13 @@ def test_cos_AD():
 
 def test_cos_num():
 	assert(unary.cos(5.0) == pytest.approx(0.2836, 0.001))
+
+def test_sub_unary():
+	x = ad.AD(2.0)
+	assert((unary.cos(x**2) - unary.cos(x**2)) == ad.AD(0.0, 0.0))
+
+def test_sqrt_pow():
+	x = ad.AD(4.0)
+	print(unary.sqrt(x**2).val)
+	print(unary.sqrt(x**2).der)
+	assert(unary.sqrt(x**2) == ad.AD(4.0, 1.0))
