@@ -1,5 +1,7 @@
 # AD.py
 
+import numpy as np
+
 class AD():
 
 	def __init__(self, val, der=1.0):
@@ -10,11 +12,11 @@ class AD():
 		return "f(x)= %s f'(x) %s" % (str(self.val), str(self.der))
 
 	def __eq__(self, other):
-		return (self.val == other.val)
+		return (self.val == other.val and self.der == other.der)
 
 	def __add__(self, other):
 		try:
-			return AD(self.val + other.val, self.der)
+			return AD(self.val + other.val, self.der + other.der)
 		except AttributeError:
 			return AD(self.val + other, self.der)
 
@@ -31,55 +33,32 @@ class AD():
 		return self.__mul__(other)
 
 	def __sub__(self, other):
-		return NotImplementedError
+		try:
+			return AD(self.val - other.val, self.der - other.der)
+		except AttributeError:
+			return AD(self.val - other, self.der)
 
 	def __rsub__(self, other):
-		return NotImplementedError
+		try:
+			return AD(self.val -  other.val, self.der -  other.der)
+		except AttributeError:
+			return AD(other - self.val, self.der)
 		
 	def __truediv__(self, other):
-		return NotImplementedError
+		try:
+			return AD(self.val / other.val, (self.der * other.val - self.val * other.der)/(other.val)**2)
+		except AttributeError:
+			return AD(self.val / other, self.der / other)
 
 	def __rtruediv__(self, other):
-		return NotImplementedError
+		return AD(other / self.val, -(other * self.der) / self.val ** 2)
 
-	def __pow__(self, pow):
-		return NotImplementedError
+	def __pow__(self, other):
+		try:
+			return AD(self.val**other.val, (self.val**other.val) * ((other.val / self.val * self.der) + (other.der * np.log(self.val))))
+		except AttributeError:
+			return AD(self.val**other, other * (self.val**(other - 1)) * self.der)
 
-	def __rpow__(self, pow):
-		return NotImplementedError
+	def __rpow__(self, other):
+		return AD(other**self.val, self.der * np.log(other) * other**self.val)
 
-	def log(x):
-		return NotImplementedError
-
-	def ln(x):
-		return NotImplementedError
-
-	def sqrt(x):
-		return NotImplementedError
-
-	def sin(x):
-		return NotImplementedError
-
-	def cos(x):
-		return NotImplementedError
-
-	def tan(x):
-		return NotImplementedError
-
-	def arcsin(x):
-		return NotImplementedError
-
-	def arccos(x):
-		return NotImplementedError
-
-	def arctan(x):
-		return NotImplementedError 
-
-	def sinh(x):
-		return NotImplementedError
-
-	def cosh(x):
-		return NotImplementedError
-
-	def tanh(x):
-		return NotImplementedError
