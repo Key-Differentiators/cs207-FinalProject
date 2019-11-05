@@ -63,4 +63,7 @@ def cosh(x):
 		return np.cosh(x)
 
 def tanh(x):
-	return NotImplementedError
+	try:
+		return ad.AD(np.tanh(x.val), 1 / (np.cosh(x.val))**2)
+	except AttributeError:
+		return np.tanh(x)

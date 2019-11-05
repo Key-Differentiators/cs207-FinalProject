@@ -15,28 +15,28 @@ def test_sqrt_num():
 
 def test_ln_AD():
 	assert (unary.ln(ad.AD(4.0)).val == pytest.approx(1.3862, 0.001))
-	assert (unary.ln(ad.AD(4.0)).der == 1/4)
+	assert (unary.ln(ad.AD(4.0)).der == pytest.approx(0.25, 0.001))
 
 def test_ln_num():
 	assert(unary.ln(4.0) == np.log(4.0))
 
 def test_sin_AD():
 	assert(unary.sin(ad.AD(3.0)).val == pytest.approx(0.1411, 0.001))
-	assert(unary.sin(ad.AD(3.0)).der == unary.cos(ad.AD(3.0)).val)
+	assert(unary.sin(ad.AD(0.5)).der == pytest.approx(0.8775, 0.001))
 
 def test_sin_num():
 	assert(unary.sin(3.0) == pytest.approx(0.1411, 0.001))
 
 def test_cos_AD():
 	assert(unary.cos(ad.AD(5.0)).val == pytest.approx(0.2836, 0.001))
-	assert(unary.cos(ad.AD(5.0)).der == (-1 *unary.sin(ad.AD(5.0)).val))
+	assert(unary.cos(ad.AD(0.5)).der == pytest.approx(-0.4794, 0.001))
 
 def test_cos_num():
 	assert(unary.cos(5.0) == pytest.approx(0.2836, 0.001))
 
 def test_tan_AD():
 	assert(unary.tan(ad.AD(5.0)).val == pytest.approx(-3.3805, 0.001))
-	assert(unary.tan(ad.AD(5.0)).der == (1 / unary.cos(ad.AD(5.0)).val**2))
+	assert(unary.tan(ad.AD(0.5)).der == pytest.approx(1.2984, 0.001))
 
 def test_tan_num():
 	assert(unary.tan(5.0) == pytest.approx(-3.3805, 0.001))
@@ -76,7 +76,12 @@ def test_cosh_AD():
 def test_cosh_num():
 	assert(unary.cosh(0.5) == pytest.approx(1.1276, 0.001))
 
+def test_tanh_AD():
+	assert(unary.tanh(ad.AD(0.5)).val == pytest.approx(0.4621, 0.001))
+	assert(unary.tanh(ad.AD(0.5)).der == pytest.approx(0.7864, 0.001))
 
+def test_tanh_num():
+	assert(unary.tanh(0.5) == pytest.approx(0.4621, 0.001))
 
 
 def test_sub_unary():
