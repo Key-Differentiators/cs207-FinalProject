@@ -9,7 +9,7 @@ class AD():
 		self.der = der
 
 	def __str__(self):
-		return "f(x)= %s f'(x) %s" % (str(self.val), str(self.der))
+		return "f(x)={:.2f}, f'(x)={:.2f}".format(self.val, self.der)
 
 	def __eq__(self, other):
 		return (self.val == other.val and self.der == other.der)
