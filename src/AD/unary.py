@@ -27,22 +27,40 @@ def cos(x):
 		return np.cos(x)
 
 def tan(x):
-	return NotImplementedError
+	try:
+		return ad.AD(np.tan(x.val), 1 / (cos(x.val) * cos(x.val)))
+	except AttributeError:
+		return np.tan(x)
 
 def arcsin(x):
-	return NotImplementedError
+	try:
+		return ad.AD(np.arcsin(x.val), 1 / sqrt(1 - x.val**2))
+	except AttributeError:
+		return np.arcsin(x)
 
 def arccos(x):
-	return NotImplementedError
+	try:
+		return ad.AD(np.arccos(x.val), -1 / sqrt(1 - x.val**2))
+	except AttributeError:
+		return np.arccos(x)
 
 def arctan(x):
-	return NotImplementedError 
+	try:
+		return ad.AD(np.arctan(x.val), 1 / (1 + x.val**2))
+	except AttributeError:
+		return np.arctan(x)
 
 def sinh(x):
-	return NotImplementedError
+	try:
+		return ad.AD(np.sinh(x.val), np.cosh(x.val))
+	except AttributeError:
+		return np.sinh(x)
 
 def cosh(x):
-	return NotImplementedError
+	try:
+		return ad.AD(np.cosh(x.val), np.sinh(x.val))
+	except AttributeError:
+		return np.cosh(x)
 
 def tanh(x):
 	return NotImplementedError

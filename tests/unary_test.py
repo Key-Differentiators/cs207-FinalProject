@@ -34,6 +34,51 @@ def test_cos_AD():
 def test_cos_num():
 	assert(unary.cos(5.0) == pytest.approx(0.2836, 0.001))
 
+def test_tan_AD():
+	assert(unary.tan(ad.AD(5.0)).val == pytest.approx(-3.3805, 0.001))
+	assert(unary.tan(ad.AD(5.0)).der == (1 / unary.cos(ad.AD(5.0)).val**2))
+
+def test_tan_num():
+	assert(unary.tan(5.0) == pytest.approx(-3.3805, 0.001))
+
+def test_arcsin_AD():
+	assert(unary.arcsin(ad.AD(0.5)).val == pytest.approx(0.5235, 0.001))
+	assert(unary.arcsin(ad.AD(0.5)).der == pytest.approx(1.1547, 0.001))
+
+def test_arcsin_num():
+	assert(unary.arcsin(0.5) == pytest.approx(0.5235, 0.001))
+
+def test_arccos_AD():
+	assert(unary.arccos(ad.AD(0.5)).val == pytest.approx(1.0472, 0.001))
+	assert(unary.arccos(ad.AD(0.5)).der == pytest.approx(-1.1547, 0.001))
+
+def test_arccos_num():
+	assert(unary.arccos(0.5) == pytest.approx(1.0472, 0.001))
+
+def test_arctan_AD():
+	assert(unary.arctan(ad.AD(0.5)).val == pytest.approx(0.4636, 0.001))
+	assert(unary.arctan(ad.AD(0.5)).der == pytest.approx(0.8, 0.001))
+
+def test_arctan_num():
+	assert(unary.arctan(0.5) == pytest.approx(0.4636, 0.001))
+#####
+def test_sinh_AD():
+	assert(unary.sinh(ad.AD(0.5)).val == pytest.approx(0.5210, 0.001))
+	assert(unary.sinh(ad.AD(0.5)).der == pytest.approx(1.1276, 0.001))
+
+def test_sinh_num():
+	assert(unary.sinh(0.5) == pytest.approx(0.5210, 0.001))
+
+def test_cosh_AD():
+	assert(unary.cosh(ad.AD(0.5)).val == pytest.approx(1.1276, 0.001))
+	assert(unary.cosh(ad.AD(0.5)).der == pytest.approx(0.5210, 0.001))
+
+def test_cosh_num():
+	assert(unary.cosh(0.5) == pytest.approx(1.1276, 0.001))
+
+
+
+
 def test_sub_unary():
 	x = ad.AD(2.0)
 	assert((unary.cos(x**2) - unary.cos(x**2)) == ad.AD(0.0, 0.0))
