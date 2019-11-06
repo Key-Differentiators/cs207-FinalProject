@@ -1,7 +1,7 @@
 # interpreter.py
 
-from keydifferentiator.AD import AD as ad
-from keydifferentiator.AD import unary
+from keydifferentiator import AD as ad
+from keydifferentiator import unary
 from unary import *
 import re
 
