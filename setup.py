@@ -13,4 +13,5 @@ setup(
     license='MIT',
     description='Automatic differentiation tool',
     long_description=open('README.md').read(),
+    long_description_content_type='text/x-rst'
 )
