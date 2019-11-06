@@ -1,5 +1,7 @@
 # AD.py
 
+import numpy as np
+
 class AD():
 
 	def __init__(self, val, der=1.0):

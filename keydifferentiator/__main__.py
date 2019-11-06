@@ -2,6 +2,7 @@
 
 from keydifferentiator import AD as ad
 from keydifferentiator.unary import *
+import re
 
 def main():
 	while True:
