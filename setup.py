@@ -7,7 +7,7 @@ setup(
     name='keydifferentiator',
     url='https://github.com/Key-Differentiators/cs207-FinalProject',
     author='Kate Grosch, Spencer Penn, Mingyue Wei',
-    packages=find_packages(exclude=("tests")),
+    packages=['keydifferentiator'],
     install_requires=['numpy', 'regex'],
     version='0.1',
     license='MIT',
