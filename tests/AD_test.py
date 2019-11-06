@@ -2,7 +2,7 @@
 
 import pytest
 import numpy as np
-from src.AD import AD
+from keydifferentiator import AD
 
 def test_add_AD_AD():
 	x = AD.AD(2.0) + AD.AD(3.0)

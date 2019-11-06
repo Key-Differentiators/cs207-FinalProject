@@ -2,8 +2,8 @@
 
 import pytest
 import numpy as np
-from src.AD import AD as ad
-from src.AD import unary
+from keydifferentiator import AD as ad
+from keydifferentiator import unary
 
 def test_sqrt_AD():
 	x = unary.sqrt(ad.AD(4.0))
