@@ -1,9 +1,7 @@
 # interpreter.py
 
 from keydifferentiator import AD as ad
-from keydifferentiator import unary
-from unary import *
-import re
+from keydifferentiator.unary import *
 
 def main():
 	while True:
