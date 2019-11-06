@@ -1,6 +1,6 @@
 # unary.py
 import numpy as np
-from src.AD import AD as ad
+from keydifferentiator.AD import AD as ad
 
 def ln(x):
 	try:
