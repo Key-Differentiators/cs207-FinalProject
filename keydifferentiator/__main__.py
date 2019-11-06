@@ -1,11 +1,10 @@
 # interpreter.py
 
 from keydifferentiator import AD as ad
-from keydifferentiator import unary
-from unary import *
+from keydifferentiator.unary import *
 import re
 
-def interpreter():
+def main():
 	while True:
 		f = input("Input your function:   f(x) = ")
 		x = input("What value of x would you like to evaluate at? Enter a number:   ")
@@ -14,3 +13,6 @@ def interpreter():
 		f = re.sub('x', x, f)
 		x = eval(f)
 		print(x)
+
+if __name__ == "__main__":
+	main()

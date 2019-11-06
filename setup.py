@@ -1,15 +1,17 @@
 # setup.py
 
-from setuptools import setup, find_packages
+from setuptools import setup
+from setuptools import find_packages
 
 setup(
-    name='KeyDifferentiator',
+    name='keydifferentiator',
     url='https://github.com/Key-Differentiators/cs207-FinalProject',
     author='Kate Grosch, Spencer Penn, Mingyue Wei',
-    packages=find_packages(),
-    install_requires=['numpy'],
+    packages=['keydifferentiator'],
+    install_requires=['numpy', 'regex'],
     version='0.1',
     license='MIT',
     description='Automatic differentiation tool',
     long_description=open('README.md').read(),
+    long_description_content_type='text/x-rst'
 )
