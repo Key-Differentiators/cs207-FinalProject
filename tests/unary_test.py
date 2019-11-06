@@ -3,7 +3,7 @@
 import pytest
 import numpy as np
 from src.AD import AD as ad
-from src.AD import Unary
+from src.AD import unary
 
 def test_sqrt_AD():
 	x = unary.sqrt(ad.AD(4.0))
@@ -61,7 +61,7 @@ def test_arctan_AD():
 
 def test_arctan_num():
 	assert(unary.arctan(0.5) == pytest.approx(0.4636, 0.001))
-#####
+
 def test_sinh_AD():
 	assert(unary.sinh(ad.AD(0.5)).val == pytest.approx(0.5210, 0.001))
 	assert(unary.sinh(ad.AD(0.5)).der == pytest.approx(1.1276, 0.001))
@@ -82,7 +82,6 @@ def test_tanh_AD():
 
 def test_tanh_num():
 	assert(unary.tanh(0.5) == pytest.approx(0.4621, 0.001))
-
 
 def test_sub_unary():
 	x = ad.AD(2.0)
