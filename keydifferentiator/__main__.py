@@ -1,19 +1,16 @@
-# interpreter.py
+# __main__.py
 
-from keydifferentiator import AD as ad
-from keydifferentiator.unary import *
-import re
+import keydifferentiator.diff as d
 
 def main():
 	while True:
 		f = input("Input your function:   f(x) = ")
 		x = input("What value of x would you like to evaluate at? Enter a number:   ")
 		print("Evaluating f(x) = %s at x = %f..." % (f, float(x)))
-		eq = re.sub('x', 'ad.AD(x)', f)
-		eq = re.sub('x', x, eq)
+
 		try: 
-			x = eval(eq)
-			print(x)
+			result = d.diff(f, x)
+			print("f(x) = %f, f'(x) = %f" % (result[0], result[1]))
 		except:
 			print("Cannot evaluate f(x) = %s at x = %d." % (f, float(x)))
 			print("Hints: ")
@@ -22,3 +19,4 @@ def main():
 
 if __name__ == "__main__":
 	main()
+
