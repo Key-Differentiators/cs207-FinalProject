@@ -1,5 +1,8 @@
 # demo.py
 
+#####      TO RUN      #####
+## run 'python -m demo.demo'
+
 from keydifferentiator import diff
 
 # create a function to differentiate
