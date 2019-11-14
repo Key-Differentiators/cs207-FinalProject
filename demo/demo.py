@@ -9,7 +9,7 @@ f = '3 * x + 1'
 x = 1
 
 # get the value and derivative of function f at value x as a tuple
-value, derivative = d.diff(f, x)
+value, derivative = diff.diff(f, x)
 
 # print the result
 print("Evaluated the function %s at %f" % (f, x))

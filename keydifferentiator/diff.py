@@ -1,4 +1,4 @@
-# diff.py
+# auto_diff.py
 
 import re
 import keydifferentiator.AD as ad
