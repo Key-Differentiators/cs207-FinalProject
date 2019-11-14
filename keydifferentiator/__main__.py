@@ -4,7 +4,9 @@ import keydifferentiator.diff as d
 
 def main():
 	while True:
-		f = input("Input your function:   f(x) = ")
+		f = input("Input your function, or enter q to quit:   f(x) = ")
+		if f == 'q':
+			break;
 		x = input("What value of x would you like to evaluate at? Enter a number:   ")
 		print("Evaluating f(x) = %s at x = %f..." % (f, float(x)))
 
