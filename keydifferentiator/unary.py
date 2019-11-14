@@ -3,6 +3,12 @@
 import numpy as np
 from keydifferentiator import AD as ad
 
+def neg(x):
+	try:
+		return ad.AD(-1*x.val, -1*x.der)
+	except:
+		return -1*x
+
 def ln(x):
 	try:
 		return ad.AD(np.log(x.val), x.der / x.val)
