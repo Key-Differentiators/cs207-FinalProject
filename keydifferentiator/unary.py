@@ -9,6 +9,12 @@ def neg(x):
 	except:
 		return -1*x
 
+def exp(x):
+	try:
+		return ad.AD(np.exp(x.val), x.der * np.exp(x.val))
+	except:
+		return np.exp(x)
+
 def ln(x):
 	try:
 		return ad.AD(np.log(x.val), x.der / x.val)
