@@ -13,6 +13,14 @@ def test_neg_AD():
 def test_neg_num():
 	assert(unary.neg(5.0) == -5.0)
 
+def test_exp_AD():
+	x = unary.exp(ad.AD(4.0))
+	assert (x.val == pytest.approx(54.5981, 0.001))
+	assert (x.der == pytest.approx(54.5981, 0.001))
+
+def test_exp_num():
+	assert (unary.exp(4.0) == np.exp(4.0))
+
 def test_sqrt_AD():
 	x = unary.sqrt(ad.AD(4.0))
 	y = ad.AD(2.0, 1/4)
