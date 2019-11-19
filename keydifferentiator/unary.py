@@ -1,7 +1,19 @@
 # unary.py
 
 import numpy as np
-from keydifferentiator import AD as ad
+import keydifferentiator.AD as ad
+
+def neg(x):
+	try:
+		return ad.AD(-1*x.val, -1*x.der)
+	except:
+		return -1*x
+
+def exp(x):
+	try:
+		return ad.AD(np.exp(x.val), x.der * np.exp(x.val))
+	except:
+		return np.exp(x)
 
 def ln(x):
 	try:
