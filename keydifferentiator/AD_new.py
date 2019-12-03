@@ -5,10 +5,10 @@ class AD():
     def __init__(self, val, der=[1.0]):
         """ # todo: write introduction
 
-        INPUTS
+        INPUTS # todo
         =======
         val: 
-        der: 
+        der: # der has to be in list, i.e. 1.0 is not accepted
 
         EXAMPLES
         =========
@@ -155,13 +155,48 @@ class AD():
         # todo
         pass
 
-    def __pow__(self, other):
-        # todo
-        pass
+    def __pow__(self, p):
+        """ Power of an AD object
 
-    def __rpow__(self, other):
-        # todo
-        pass
+        INPUTS
+        =======
+        self: original AD object
+        p: the power to be raised to
+
+        RETURNS
+        ========
+        result: AD object that is power p of self
+
+        EXAMPLES
+        =========
+        >>> x = AD(3.0, [1.])
+        >>> print(x**3)
+        AD(27.0, [27.])
+        """
+        if self.val==0:
+            return AD(0, [0.0]) # todo: check whether derivative is correct here
+        
+        return AD(self.val**p, p*(self.val**(p-1))*self.der)
+
+    def __rpow__(self, n):
+        """ Power of n to an AD object
+
+        INPUTS
+        =======
+        self: AD object, the wanted power
+        n: base
+
+        RETURNS
+        ========
+        result: power to self of n
+
+        EXAMPLES
+        >>> x = AD(2.0, [1.0])
+        >>> print(3**x)
+        AD(9.0, [9.8875106]) # todo: doctest not passed
+        =========
+        """
+        return AD(n**self.val, (n**self.val)*np.log(n)*self.der)
 
     def __eq__(self, other):
         """ Check if self and other are equal
