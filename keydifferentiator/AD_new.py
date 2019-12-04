@@ -8,7 +8,7 @@ class AD():
         INPUTS # todo
         =======
         val: 
-        der: # der has to be in list, i.e. 1.0 is not accepted
+        der:
 
         EXAMPLES
         =========
@@ -20,19 +20,45 @@ class AD():
         >>> y = AD(4, [0.0, 1.0])
         >>> print(y)
         AD(4, [0. 1.])
+        >>> print(AD([x*y,x+y,2*y])) # todo: doctest not work
+        Function values: [12, 7, 8]
+        Jacobian:
+        [[4. 3.]
+         [1. 1.]
+         [0. 2.]]
         """
 
         if isinstance(val, float) or isinstance(val, int):
             self.val = val
-            self.der = np.array(der)
-        # todo
-        # input is vector of functions/AD objects, derivative should be set to the jacobian
-        # else:
+            if isinstance(der, np.ndarray):
+                self.der = der
+            else:
+                if not isinstance(der, list):
+                    der = [der]
+                self.der = np.array(der)
+        elif isinstance(val, list):
+            if all(isinstance(x, AD) for x in val):
+                vals = [val[0].val]
+                ders = val[0].der.reshape(1,-1)
+                dim  = val[0].der.shape[0]
+                for i in range(1,len(val)):
+                    if val[i].der.shape[0] != dim:
+                        raise Exception("False dimension")
+                    vals.append(val[i].val)
+                    ders = np.append(ders, val[i].der.reshape(1,-1), axis=0)
+                self.val = vals
+                self.der = ders
+            else:
+                raise TypeError
+        else:
+            raise TypeError
+
 
     def __str__(self):
-        return "AD("+str(self.val)+", "+str(self.der)+")"
-        # todo
-        # may need another case when input is vector of functions
+        if isinstance(self.val, list): # vector of functions
+            return "Fucntion values: "+str(self.val)+"\nJacobian:\n"+str(self.der)
+        else:
+            return "AD("+str(self.val)+", "+str(self.der)+")"
 
     def __add__(self, other):
         """ Addition of an AD object to an int, a float, or an AD object
@@ -148,12 +174,52 @@ class AD():
         return self.__mul__(other)
 
     def __truediv__(self, other):
-        # todo
-        pass
+        """ Division of an AD object by an int, a float, or an AD object
+
+        INPUTS
+        =======
+        self: original AD object as the numerator
+        other: int, float, or AD as the denominator
+
+        RETURNS
+        ========
+        result: self divided by other
+
+        EXAMPLES
+        >>> x = AD(4.0, [1.0,0.0])
+        >>> y = AD(1.0, [0.0,1.0])
+        >>> print((2*y)/x)
+        AD(2.0, [-0.5  0.5]) # todo: doctest not work
+        =========
+        """
+        if isinstance(other, float) or isinstance(other, int):
+            if other==0:
+                raise Exception("Zero cannot be denominator")
+            return AD(self.val/other, self.der/other)
+        else:
+            if other.val==0:
+                raise Exception("Zero cannot be denominator")
+            return AD(self.val/other.val, self.der/other.val-self.val/(other.val**2)*other.der)
 
     def __rtruediv__(self, other):
-        # todo
-        pass
+        """ Division of an int or a float by an AD object
+
+        INPUTS
+        =======
+        self: AD object as the denominator
+        other: int or float as the numerator
+
+        RETURNS
+        ========
+        result: other divided by self
+
+        EXAMPLES
+        >>> x = AD(2.0, [1.0,0.0])
+        >>> print(-4/x)
+        AD(-2.0, [1. 0.]) # todo: doctest not work
+        =========
+        """
+        return AD(other/self.val, -other*self.der/self.val**2)
 
     def __pow__(self, p):
         """ Power of an AD object
@@ -193,7 +259,7 @@ class AD():
         EXAMPLES
         >>> x = AD(2.0, [1.0])
         >>> print(3**x)
-        AD(9.0, [9.8875106]) # todo: doctest not passed
+        AD(9.0, [9.8875106]) # todo: doctest not work
         =========
         """
         return AD(n**self.val, (n**self.val)*np.log(n)*self.der)
