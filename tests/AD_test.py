@@ -100,6 +100,22 @@ def test_linear_combos():
 	y = AD.AD(12.0, 7.0)
 	assert(eq == y)
 
+def test_multi_variable():
+	x = AD.AD(2.0)
+	y = AD.AD(1.0)
+	eq = x*y
+	print(eq)
+	z = AD.AD(2.0, 3.0)
+	assert(eq == z)
+
+def test_multi_variable():
+	x = AD.AD(2.0)
+	y = AD.AD(3.0)
+	eq = x*y**2
+	print(eq)
+	z = AD.AD(18.0, 21.0)
+	assert(eq == z)
+
 def test_identity():
 	x = AD.AD(3.0)
 	eq = (2 * x) / (2 * x)
