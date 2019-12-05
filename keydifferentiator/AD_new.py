@@ -1,4 +1,5 @@
 # AD.py
+import numpy as np
 
 class AD():
 
@@ -189,8 +190,7 @@ class AD():
         >>> x = AD(4.0, [1.0,0.0])
         >>> y = AD(1.0, [0.0,1.0])
         >>> print((2*y)/x)
-        AD(2.0, [-0.5  0.5]) # todo: doctest not work
-        =========
+        AD(0.5, [-0.125  0.5  ])
         """
         if isinstance(other, float) or isinstance(other, int):
             if other==0:
@@ -216,8 +216,7 @@ class AD():
         EXAMPLES
         >>> x = AD(2.0, [1.0,0.0])
         >>> print(-4/x)
-        AD(-2.0, [1. 0.]) # todo: doctest not work
-        =========
+        AD(-2.0, [1. 0.])
         """
         return AD(other/self.val, -other*self.der/self.val**2)
 
@@ -259,8 +258,7 @@ class AD():
         EXAMPLES
         >>> x = AD(2.0, [1.0])
         >>> print(3**x)
-        AD(9.0, [9.8875106]) # todo: doctest not work
-        =========
+        AD(9.0, [9.8875106])
         """
         return AD(n**self.val, (n**self.val)*np.log(n)*self.der)
 
