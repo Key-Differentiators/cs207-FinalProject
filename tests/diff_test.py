@@ -1,7 +1,10 @@
 # diff_test.py
 
 import pytest
+from _pytest.monkeypatch import MonkeyPatch
+import mock
 from keydifferentiator import diff
+from keydifferentiator import __main__
 
 def test_diff():
 	f = '3 * x + 3'
@@ -9,3 +12,8 @@ def test_diff():
 	val, der = diff.diff(f, x)
 	assert(val == 6)
 	assert(der == 3)
+
+def test_init():
+    from keydifferentiator import __main__ as module
+    with mock.patch.object(module, "input", return_value='q'):
+        module.main()
