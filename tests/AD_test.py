@@ -4,6 +4,8 @@ import pytest
 import numpy as np
 from keydifferentiator import AD
 
+# def test_jacobian(): # todo
+
 def test_add_AD_AD():
 	x = AD.AD(2.0) + AD.AD(3.0)
 	y = AD.AD(5.0, 2.0)
@@ -24,16 +26,6 @@ def test_mult_AD_AD():
 	y = AD.AD(2.0, 3.0)
 	assert(x == y)
 
-def test_mult_AD_reg():
-	x = AD.AD(2.0) * 2.0
-	y = AD.AD(4.0, 2.0)
-	assert(x == y)
-
-def test_mult_reg_AD():
-	x = 2 * AD.AD(1.0)
-	y = AD.AD(2.0, 2.0)
-	assert(x == y)
-
 def test_sub_AD_AD():
 	x = AD.AD(2.0) - AD.AD(1.0)
 	y = AD.AD(1.0, 0.0)
@@ -46,7 +38,17 @@ def test_sub_AD_reg():
 
 def test_sub_reg_AD():
 	x = 2 - AD.AD(1.0)
-	y = AD.AD(1.0, 1.0)
+	y = AD.AD(1.0, -1.0)
+	assert(x == y)
+
+def test_mult_AD_reg():
+	x = AD.AD(2.0) * 2.0
+	y = AD.AD(4.0, 2.0)
+	assert(x == y)
+
+def test_mult_reg_AD():
+	x = 2 * AD.AD(1.0)
+	y = AD.AD(2.0, 2.0)
 	assert(x == y)
 
 def test_truediv_AD_AD():
@@ -63,11 +65,6 @@ def test_truediv_reg_AD():
 	x = 2 / AD.AD(1.0)
 	y = AD.AD(2.0, -2.0)
 	assert(x == y)
-
-def test_pow_AD_AD():
-	x = AD.AD(2.0)**AD.AD(2.0)
-	assert(x.val == 4.0)
-	assert(x.der == pytest.approx(6.772, .001))
 
 def test_pow_AD_reg():
 	x = AD.AD(2.0)**2
@@ -93,6 +90,23 @@ def test_add_radd_mult_rmult():
 	for (name, val) in functions:
 		assert (val.val == 7)
 		assert (val.der == 2)
+
+def test_eq():
+	x = AD.AD(3.0)
+	y = 3.0
+	assert (x==y)
+
+def test_ne():
+	x = AD.AD(3.0, [1.0,0.0])
+	y = AD.AD(3.0)
+	assert (x!=y)
+
+def test_neg():
+	x = AD.AD(3.0, [1.0,0.0])
+	y = AD.AD(2.0, [0.0,1.0])
+	f = -x*y
+	assert(f.val == -6.0)
+	assert(np.array_equal(f.der,np.array([-2.0,-3.0])))
 
 def test_linear_combos():
 	x = AD.AD(3.0)
