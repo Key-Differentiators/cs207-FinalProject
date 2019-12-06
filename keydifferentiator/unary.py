@@ -4,8 +4,6 @@ import numpy as np
 import math
 import keydifferentiator.AD as ad
 
-# todo: do we have to handle numeric cases?
-
 # todo: Exponentials
 # Should be able to handle any base
 
@@ -13,11 +11,11 @@ import keydifferentiator.AD as ad
 # Again, this can be formed from the natural exponential
 
 def exp(x):
-    """ Calculate the exponential of the input AD object
+    """ Calculate the exponential of the input AD object, integer, or float
     
     INPUTS
     =======
-    x: input value, an AD object
+    x: input value, an AD object, int, or flot
     
     RETURNS
     ========
@@ -32,14 +30,17 @@ def exp(x):
     >>> print(exp(x*y))
     AD(403.4287934927351, [1210.28638048  806.85758699])
     """
-    return ad.AD(np.exp(x.val), np.exp(x.val)*x.der)
+    try:
+        return ad.AD(np.exp(x.val), np.exp(x.val)*x.der)
+    except AttributeError:
+        return np.exp(x)
 
 def ln(x):
-    """ Calculate the natural base logarithm of the input AD object
+    """ Calculate the natural base logarithm of the input AD object, integer, or float
     
     INPUTS
     =======
-    x: input value, an AD object
+    x: input value, an AD object, int, or float
     
     RETURNS
     ========
@@ -52,14 +53,17 @@ def ln(x):
     >>> print(ln(x*y))
     AD(1.791759469228055, [0.5        0.33333333])
     """
-    return ad.AD(np.log(x.val), x.der/x.val)
+    try:
+        return ad.AD(np.log(x.val), x.der/x.val)
+    except AttributeError:
+        return np.log(x)
 
 def log(x, base):
-    """ Calculate the logarithm of an AD object of given base
+    """ Calculate the logarithm of an AD object, integer, or float of given base
     
     INPUTS
     =======
-    x: the AD object
+    x: the AD object, int, or float
     base: logarithm base
     
     RETURNS
@@ -72,14 +76,17 @@ def log(x, base):
     >>> print(log(x,2))
     AD(2.0, [0.36067376])
     """
-    return ad.AD(math.log(x.val, base), x.der/(x.val*np.log(base)))
+    try:
+        return ad.AD(math.log(x.val, base), x.der/(x.val*np.log(base)))
+    except AttributeError:
+        return math.log(x,base)
 
 def sqrt(x):
-    """ Calculate the square root of the input AD object
+    """ Calculate the square root of the input AD object, integer, or float
     
     INPUTS
     =======
-    x: input value, an AD object
+    x: input value, an AD object, int, or float
     
     RETURNS
     ========
@@ -95,11 +102,11 @@ def sqrt(x):
     return x**(1/2)
 
 def sin(x):
-    """ Calculate sine of the input AD object
+    """ Calculate sine of the input AD object, integer, or float
     
     INPUTS
     =======
-    x: input value, an AD object
+    x: input value, an AD object, int, or float
     
     RETURNS
     ========
@@ -112,14 +119,17 @@ def sin(x):
     >>> print(sin(x*y))
     AD(-0.27941549819892586, [2.88051086 1.92034057])
     """
-    return ad.AD(np.sin(x.val), x.der*np.cos(x.val))
+    try:
+        return ad.AD(np.sin(x.val), x.der*np.cos(x.val))
+    except AttributeError:
+        return np.sin(x)
 
 def cos(x):
-    """ Calculate cosine of the input AD object
+    """ Calculate cosine of the input AD object, integer, or float
     
     INPUTS
     =======
-    x: input value, an AD object
+    x: input value, an AD object, int, or float
     
     RETURNS
     ========
@@ -132,14 +142,17 @@ def cos(x):
     >>> print(cos(x*y))
     AD(0.9601702866503661, [0.83824649 0.558831  ])
     """
-    return ad.AD(np.cos(x.val), -x.der*np.sin(x.val))
+    try:
+        return ad.AD(np.cos(x.val), -x.der*np.sin(x.val))
+    except AttributeError:
+        return np.cos(x)
 
 def tan(x):
-    """ Calculate tangent of the input AD object
+    """ Calculate tangent of the input AD object, integer, or float
     
     INPUTS
     =======
-    x: input value, an AD object
+    x: input value, an AD object, int, or float
     
     RETURNS
     ========
@@ -154,11 +167,11 @@ def tan(x):
     return sin(x)/cos(x)
 
 def arcsin(x):
-    """ Calculate inverse sine of the input AD object
+    """ Calculate inverse sine of the input AD object, integer, or float
     
     INPUTS
     =======
-    x: input value, an AD object
+    x: input value, an AD object, int, or float
     
     RETURNS
     ========
@@ -170,16 +183,19 @@ def arcsin(x):
     >>> print(arcsin(x))
     AD(0.5235987755982988, [1.15470054])
     """
-    if x.val<=-1 or x.val>=1:
-        raise ValueError("X out of (-1,1) domain")
-    return ad.AD(np.arcsin(x.val), x.der/np.sqrt(1-x.val**2))
+    try:
+        if x.val<=-1 or x.val>=1:
+            raise ValueError("X out of (-1,1) domain")
+        return ad.AD(np.arcsin(x.val), x.der/np.sqrt(1-x.val**2))
+    except AttributeError:
+        return np.arcsin(x)
 
 def arccos(x):
-    """ Calculate inverse cosine of the input AD object
+    """ Calculate inverse cosine of the input AD object, integer, or float
     
     INPUTS
     =======
-    x: input value, an AD object
+    x: input value, an AD object, int, or float
     
     RETURNS
     ========
@@ -191,16 +207,19 @@ def arccos(x):
     >>> print(arccos(x))
     AD(1.0471975511965976, [-1.15470054])
     """
-    if x.val<=-1 or x.val>=1:
-        raise ValueError("X out of (-1,1) domain")
-    return ad.AD(np.arccos(x.val), -x.der/np.sqrt(1-x.val**2))
+    try:
+        if x.val<=-1 or x.val>=1:
+            raise ValueError("X out of (-1,1) domain")
+        return ad.AD(np.arccos(x.val), -x.der/np.sqrt(1-x.val**2))
+    except AttributeError:
+        return np.arccos(x)
 
 def arctan(x):
-    """ Calculate inverse tangent of the input AD object
+    """ Calculate inverse tangent of the input AD object, integer, or float
     
     INPUTS
     =======
-    x: input value, an AD object
+    x: input value, an AD object, int, or float
     
     RETURNS
     ========
@@ -212,14 +231,17 @@ def arctan(x):
     >>> print(arctan(x))
     AD(1.1071487177940906, [0.2])
     """
-    return ad.AD(np.arctan(x.val), x.der/(1+x.val**2))
+    try:
+        return ad.AD(np.arctan(x.val), x.der/(1+x.val**2))
+    except AttributeError:
+        return np.arctan(x)
 
 def sinh(x):
-    """ Calculate hyperbolic sine of the input AD object
+    """ Calculate hyperbolic sine of the input AD object, integer, or float
     
     INPUTS
     =======
-    x: input value, an AD object
+    x: input value, an AD object, int, or float
     
     RETURNS
     ========
@@ -232,14 +254,17 @@ def sinh(x):
     >>> print(sinh(x+y))
     AD(74.20321057778875, [74.20994852 74.20994852])
     """
-    return ad.AD(np.sinh(x.val), x.der*np.cosh(x.val))
+    try:
+        return ad.AD(np.sinh(x.val), x.der*np.cosh(x.val))
+    except AttributeError:
+        return np.sinh(x)
 
 def cosh(x):
-    """ Calculate hyperbolic cosine of the input AD object
+    """ Calculate hyperbolic cosine of the input AD object, integer, or float
     
     INPUTS
     =======
-    x: input value, an AD object
+    x: input value, an AD object, int, or float
     
     RETURNS
     ========
@@ -252,14 +277,17 @@ def cosh(x):
     >>> print(cosh(x*y))
     AD(201.7156361224559, [605.13947211 403.42631474])
     """
-    return ad.AD(np.cosh(x.val), x.der*np.sinh(x.val))
+    try:
+        return ad.AD(np.cosh(x.val), x.der*np.sinh(x.val))
+    except AttributeError:
+        return np.cosh(x)
 
 def tanh(x):
-    """ Calculate hyperbolic tangent of the input AD object
+    """ Calculate hyperbolic tangent of the input AD object, integer, or float
     
     INPUTS
     =======
-    x: input value, an AD object
+    x: input value, an AD object, int, or float
     
     RETURNS
     ========
@@ -271,4 +299,7 @@ def tanh(x):
     >>> print(tanh(x))
     AD(0.9640275800758169, [0.07065082 0.        ])
     """
-    return ad.AD(np.tanh(x.val), x.der/np.cosh(x.val)**2)
+    try:
+        return ad.AD(np.tanh(x.val), x.der/np.cosh(x.val)**2)
+    except AttributeError:
+        return np.tanh(x)
