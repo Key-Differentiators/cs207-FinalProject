@@ -3,8 +3,17 @@
 import pytest
 import numpy as np
 from keydifferentiator import AD
+from keydifferentiator import unary
 
-# def test_jacobian(): # todo
+def test_jacobian():
+	x = AD.AD(3.0, [1.0,0.0,0.0])
+	y = AD.AD(2.0, [0.0,1.0,0.0])
+	z = AD.AD(1.0, [0.0,0.0,1.0])
+	vals, ders = AD.AD.get_jacobian([x*y, x+y, z, unary.sin(x)])
+	test_jac = np.array([[2.0,3.0,0.0],[1.0,1.0,0.0],[0.0,0.0,1.0],[np.cos(3.0),0.0,0.0]])
+	assert(vals[0]==6.0)
+	assert(vals[2]==1.0)
+	assert(np.array_equal(ders, test_jac))
 
 def test_add_AD_AD():
 	x = AD.AD(2.0) + AD.AD(3.0)

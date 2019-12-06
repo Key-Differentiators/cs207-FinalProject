@@ -10,7 +10,7 @@ class AD():
         =======
         val: value of the AD object, an integer or a float
         der: derivative of the AD object, an integer, a float, or a list
-             optional, if not specified [1.0] is the default derivative
+             optional, if not specified, [1.0] is the default derivative
 
         EXAMPLES
         =========
@@ -22,12 +22,6 @@ class AD():
         >>> y = AD(4, [0.0, 1.0])
         >>> print(y)
         AD(4, [0. 1.])
-        >>> print(AD([x*y,x+y,2*y])) # todo: doctest not work
-        Function values: [12, 7, 8]
-        Jacobian:
-        [[4. 3.]
-         [1. 1.]
-         [0. 2.]]
         """
 
         if isinstance(val, float) or isinstance(val, int):
@@ -38,29 +32,47 @@ class AD():
                 if not isinstance(der, list):
                     der = [der]
                 self.der = np.array(der)
-        elif isinstance(val, list):
-            if all(isinstance(x, AD) for x in val):
-                vals = [val[0].val]
-                ders = val[0].der.reshape(1,-1)
-                dim  = val[0].der.shape[0]
-                for i in range(1,len(val)):
-                    if val[i].der.shape[0] != dim:
-                        raise Exception("False dimension")
-                    vals.append(val[i].val)
-                    ders = np.append(ders, val[i].der.reshape(1,-1), axis=0)
-                self.val = vals
-                self.der = ders
-            else:
-                raise TypeError
         else:
             raise TypeError
 
 
     def __str__(self):
-        if isinstance(self.val, list): # vector of functions
-            return "Fucntion values: "+str(self.val)+"\nJacobian:\n"+str(self.der)
-        else:
-            return "AD("+str(self.val)+", "+str(self.der)+")"
+        return "AD("+str(self.val)+", "+str(self.der)+")"
+
+    def get_jacobian(functions):
+        """ Return the values and the Jacobian matrix of the vector of functions
+
+        INPUTS
+        =======
+        self: an AD object
+        functions: list of functions
+
+        RETURNS
+        ========
+        vals: list of values of the functions
+        ders: the Jacobian matrix of the list of functions
+                an numpy array whose (i,j) entry is the partial derivative of unknown j regarding to function i
+
+        EXAMPLES
+        =========
+
+        """
+        if len(functions)>0:
+            if all(isinstance(x, AD) for x in functions):
+                vals = [functions[0].val]
+                ders = functions[0].der.reshape(1,-1)
+                dim  = functions[0].der.shape[0]
+                for i in range(1,len(functions)):
+                    if functions[i].der.shape[0] != dim:
+                        raise Exception("Incorrect dimension")
+                    vals.append(functions[i].val)
+                    ders = np.append(ders, functions[i].der.reshape(1,-1), axis=0)
+                return vals, ders
+            else:
+                raise TypeError
+        else: raise Exception("Empty list of functions")
+
+
 
     def __add__(self, other):
         """ Addition of an AD object to an int, a float, or an AD object
