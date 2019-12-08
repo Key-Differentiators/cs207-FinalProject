@@ -104,7 +104,6 @@ def sin(x):
     except AttributeError:
         return np.sin(x)
 
-
 def cos(x):
     try:
         z = Reverse(cos(x.value))
@@ -113,22 +112,17 @@ def cos(x):
     except AttributeError:
         return np.cos(x)
 
-
 def tan(x):
     return sin(x) / cos(x)
-
 
 def sec(x):
     return 1 / cos(x)
 
-
 def csc(x):
     return 1 / sin(x)
 
-
 def cot(x):
     return 1 / tan(x)
-
 
 def exp(x):
     try:
@@ -138,7 +132,6 @@ def exp(x):
     except AttributeError:
         return np.exp(x)
 
-
 def sinh(x):
     try:
         z = Reverse(sinh(x.value))
@@ -146,7 +139,6 @@ def sinh(x):
         return z
     except AttributeError:
         return (exp(x) - exp(-x)) / 2
-
 
 def cosh(x):
     try:
@@ -156,34 +148,26 @@ def cosh(x):
     except AttributeError:
         return (exp(x) + exp(-x)) / 2
 
-
 def tanh(x):
     return sinh(x) / cosh(x)
-
 
 def sech(x):
     return 1 / cosh(x)
 
-
 def csch(x):
     return 1 / sinh(x)
-
 
 def coth(x):
     return 1 / tanh(x)
 
-
 def ln(x):
     return log(x)
-
 
 def log2(x):
     return log(x, 2)
 
-
 def log10(x):
     return log(x, 10)
-
 
 def log(x, base=np.exp(1)):
     # default log is natural log
@@ -194,10 +178,8 @@ def log(x, base=np.exp(1)):
     except AttributeError:
         return math.log(x, base)
 
-
 def sqrt(x):
     return x**(1/2)
-
 
 class rVector():
     def __init__(self, functions: list, variables: dict):
