@@ -118,6 +118,79 @@ def test_single_var():
     assert f.value == approx(3)
     assert x.get_gradient() == approx(1)
 
+def test_neg_Rev():
+    x = -(Reverse(5.0))
+    y = Reverse(-5.0)
+    assert (x == y)
+
+def test_exp_Rev():
+    x = exp(Reverse(4.0))
+    assert (x.value == pytest.approx(54.5981, 0.001))
+
+def test_exp_num():
+    assert (exp(4.0) == np.exp(4.0))
+
+def test_sqrt_Rev():
+    x = sqrt(Reverse(4.0))
+    y = Reverse(2.0)
+    assert (x == y)
+
+def test_sqrt_num():
+    assert(sqrt(4.0) == np.sqrt(4.0))
+
+def test_ln_Rev():
+    assert (ln(Reverse(4.0)).value == pytest.approx(1.3862, 0.001))
+
+def test_ln_num():
+    assert(ln(4.0) == np.log(4.0))
+
+def test_sin_Rev():
+    assert(sin(Reverse(3.0)).value == pytest.approx(0.1411, 0.001))
+
+def test_sin_num():
+    assert(sin(3.0) == pytest.approx(0.1411, 0.001))
+
+def test_cos_Rev():
+    assert(cos(Reverse(5.0)).value == pytest.approx(0.2836, 0.001))
+
+def test_cos_num():
+    assert(cos(5.0) == pytest.approx(0.2836, 0.001))
+
+def test_tan_Rev():
+    assert(tan(Reverse(5.0)).value == pytest.approx(-3.3805, 0.001))
+
+def test_tan_num():
+    assert(tan(5.0) == pytest.approx(-3.3805, 0.001))
+
+def test_sinh_Rev():
+    assert(sinh(Reverse(0.5)).value == pytest.approx(0.5210, 0.001))
+
+def test_sinh_num():
+    assert(sinh(0.5) == pytest.approx(0.5210, 0.001))
+
+def test_cosh_Rev():
+    assert(cosh(Reverse(0.5)).value == pytest.approx(1.1276, 0.001))
+
+def test_cosh_num():
+    assert(cosh(0.5) == pytest.approx(1.1276, 0.001))
+
+def test_tanh_Rev():
+    assert(tanh(Reverse(0.5)).value == pytest.approx(0.4621, 0.001))
+
+def test_tanh_num():
+    assert(tanh(0.5) == pytest.approx(0.4621, 0.001))
+
+def test_sub_Rev():
+    x = Reverse(2.0)
+    assert((cos(x**2) - cos(x**2)) == Reverse(0.0))
+
+def test_sqrt_pow():
+    x = Reverse(4.0)
+    print(sqrt(x**2).value)
+    print(sqrt(x**2).gradient_value)
+    assert(sqrt(x**2) == Reverse(4.0))
+
+
 
 # def test_multiplication():
 #     x = Reverse(1)
