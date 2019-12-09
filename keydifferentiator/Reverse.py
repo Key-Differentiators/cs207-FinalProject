@@ -23,7 +23,7 @@ class Reverse:
         return self.gradient_value
 
     def __str__(self):
-        return f'value = {self.value}, gradient_value = {self.gradient_value}'
+        return f'value = {self.value}, gradient_value = {self.get_gradient()}'
 
     def __add__(self, other):
         try:
@@ -86,7 +86,7 @@ class Reverse:
 
     def __eq__(self, other):
         try:
-            return self.value == other.value and self.gradient_value == other.gradient_value
+            return self.value == other.value and self.get_gradient() == other.get_gradient()
         except AttributeError:
             return self.value == other
 
