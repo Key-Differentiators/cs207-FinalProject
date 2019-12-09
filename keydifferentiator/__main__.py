@@ -5,16 +5,19 @@ import keydifferentiator.AD as ad
 from keydifferentiator.Reverse import *
 from keydifferentiator.unary import *
 
-def diff_forward(f, x, method):
+def diff(f, x, method):
 	if method == 'forward':
 		eq = re.sub('x', 'ad.AD(x)', f)
+		eq = re.sub('x', str(x), eq)
+		result = eval(eq)
+		return (result.val, result.der)
 	elif method == 'reverse':
 		eq = re.sub('x', 'Reverse(x)', f)
+		eq = re.sub('x', str(x), eq)
+		result = eval(eq)
+		return (result.value, result.get_gradient())
 	else:
 		raise Exception
-	eq = re.sub('x', str(x), eq)
-	result = eval(eq)
-	return (result.val, result.der)
 
 def main():
 	while True:

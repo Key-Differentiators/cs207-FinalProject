@@ -186,8 +186,6 @@ def test_sub_Rev():
 
 def test_sqrt_pow():
     x = Reverse(4.0)
-    print(sqrt(x**2).value)
-    print(sqrt(x**2).gradient_value)
     assert(sqrt(x**2) == Reverse(4.0))
 
 def test_tan():
