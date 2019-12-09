@@ -55,7 +55,15 @@ class AD():
 
         EXAMPLES
         =========
-
+        >>> x = AD(3.0, [1.0,0.0])
+        >>> y = AD(4.0, [0.0,1.0])
+        >>> vals, ders = AD.get_jacobian([x*y, x+y, 2*x])
+        >>> print(vals)
+        [12.0, 7.0, 6.0]
+        >>> print(ders.shape)
+        (3, 2)
+        >>> print(ders[0])
+        [4. 3.]
         """
         if len(functions)>0:
             if all(isinstance(x, AD) for x in functions):
