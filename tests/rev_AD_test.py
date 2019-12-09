@@ -224,3 +224,10 @@ def test_cosec():
     f.gradient_value = 1.0
     assert f.value == approx(1 / np.sin(-1))
     assert x.get_gradient() == approx(-1 / np.tan(-1) / np.sin(-1))
+
+def test_log2_log10():
+    x = Reverse(3)
+    f = log2(x) + log10(x)
+    f.gradient_value = 1.0
+    assert f.value == approx(np.log2(3) + np.log10(3))
+    assert x.get_gradient() == approx(1 / (3 * np.log(10)) + 1 / (3 * np.log(2)))

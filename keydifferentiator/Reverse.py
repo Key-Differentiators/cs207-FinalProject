@@ -151,15 +151,6 @@ def cosh(x):
 def tanh(x):
     return sinh(x) / cosh(x)
 
-def sech(x):
-    return 1 / cosh(x)
-
-def csch(x):
-    return 1 / sinh(x)
-
-def coth(x):
-    return 1 / tanh(x)
-
 def ln(x):
     return log(x)
 
