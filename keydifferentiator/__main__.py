@@ -2,24 +2,31 @@
 
 import re
 import keydifferentiator.AD as ad
+from keydifferentiator.Reverse import *
 from keydifferentiator.unary import *
 
-def diff(f, x):
-	eq = re.sub('x', 'ad.AD(x)', f)
+def diff_forward(f, x, method):
+	if method == 'forward':
+		eq = re.sub('x', 'ad.AD(x)', f)
+	elif method == 'reverse':
+		eq = re.sub('x', 'Reverse(x)', f)
+	else:
+		raise Exception
 	eq = re.sub('x', str(x), eq)
 	result = eval(eq)
 	return (result.val, result.der)
 
 def main():
 	while True:
-		f = input("Input your function, or enter q to quit:   f(x) = ")
+		f = input("Input a function of x, or enter q to quit:   f(x) = ")
 		if f == 'q':
 			break;
-		x = input("What value of x would you like to evaluate at? Enter a number:   ")
-		print("Evaluating f(x) = %s at x = %f..." % (f, float(x)))
+		x = input("What value of x would you like to evaluate at? Enter a number: ")
+		method = input("Would you like to use forward or reverse mode? [forward] or [reverse]: ")
+		print("Evaluating f(x) = %s at x = %f using %s mode..." % (f, float(x), method))
 
 		try: 
-			result = diff(f, x)
+			result = diff(f, x, method)
 			print("f(x) = %f, f'(x) = %f" % (result[0], result[1]))
 		except:
 			print("Cannot evaluate f(x) = %s at x = %d." % (f, float(x)))
