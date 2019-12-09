@@ -5,6 +5,15 @@ import numpy as np
 from keydifferentiator import AD
 from keydifferentiator import unary
 
+def test_invalid_init():
+	x = AD.AD(3.0)
+	with pytest.raises(TypeError, match="Invalid input type"):
+		assert AD.AD(x)
+
+def test_str():
+	x = AD.AD(3.0)
+	assert(str(x)=='AD(3.0, [1.])')
+
 def test_jacobian():
 	x = AD.AD(3.0, [1.0,0.0,0.0])
 	y = AD.AD(2.0, [0.0,1.0,0.0])
@@ -14,6 +23,16 @@ def test_jacobian():
 	assert(vals[0]==6.0)
 	assert(vals[2]==1.0)
 	assert(np.array_equal(ders, test_jac))
+
+def test_jacobian_exception():
+	x = AD.AD(3.0)
+	y = AD.AD(2.0, [0.0,1.0])
+	with pytest.raises(Exception, match="Incorrect dimension"):
+		assert AD.AD.get_jacobian([x,y])
+	with pytest.raises(TypeError, match="Invalid input type: not a function"):
+		assert AD.AD.get_jacobian([x,3.0])
+	with pytest.raises(Exception, match="Empty list of functions"):
+		assert AD.AD.get_jacobian([])
 
 def test_add_AD_AD():
 	x = AD.AD(2.0) + AD.AD(3.0)
@@ -75,6 +94,12 @@ def test_truediv_reg_AD():
 	y = AD.AD(2.0, -2.0)
 	assert(x == y)
 
+def test_truediv_zero_deno():
+	with pytest.raises(Exception, match="Zero cannot be denominator"):
+		assert AD.AD(2.0)/0
+	with pytest.raises(Exception, match="Zero cannot be denominator"):
+		assert AD.AD(2.0)/AD.AD(0.0)
+
 def test_pow_AD_reg():
 	x = AD.AD(2.0)**2
 	y = AD.AD(4.0, 4.0)
@@ -84,6 +109,10 @@ def test_pow_reg_AD():
 	x = 2**AD.AD(2.0)
 	assert(x.val == 4.0)
 	assert(x.der == pytest.approx(4.0 * np.log(2.0)))
+
+def test_zero_pow():
+	x = AD.AD(0.0)**3
+	assert(x.val == 0.0)
 
 def test_add_radd_mult_rmult():
 	x = AD.AD(2.0)
