@@ -33,7 +33,7 @@ class AD():
                     der = [der]
                 self.der = np.array(der)
         else:
-            raise TypeError
+            raise TypeError("Invalid input type")
 
 
     def __str__(self):
@@ -77,7 +77,7 @@ class AD():
                     ders = np.append(ders, functions[i].der.reshape(1,-1), axis=0)
                 return vals, ders
             else:
-                raise TypeError
+                raise TypeError("Invalid input type: not a function")
         else: raise Exception("Empty list of functions")
 
 
@@ -260,7 +260,7 @@ class AD():
         AD(27.0, [27.])
         """
         if self.val==0:
-            return AD(0, [0.0])        
+            return AD(0, 0*self.der)        
         return AD(self.val**p, p*(self.val**(p-1))*self.der)
 
     def __rpow__(self, n):

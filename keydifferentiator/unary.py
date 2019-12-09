@@ -201,7 +201,7 @@ def arcsin(x):
     """
     try:
         if x.val<=-1 or x.val>=1:
-            raise ValueError("X out of (-1,1) domain")
+            raise Exception("X out of domain")
         return ad.AD(np.arcsin(x.val), x.der/np.sqrt(1-x.val**2))
     except AttributeError:
         return np.arcsin(x)
@@ -225,7 +225,7 @@ def arccos(x):
     """
     try:
         if x.val<=-1 or x.val>=1:
-            raise ValueError("X out of (-1,1) domain")
+            raise Exception("X out of domain")
         return ad.AD(np.arccos(x.val), -x.der/np.sqrt(1-x.val**2))
     except AttributeError:
         return np.arccos(x)
