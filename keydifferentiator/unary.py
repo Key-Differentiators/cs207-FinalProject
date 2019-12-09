@@ -4,12 +4,6 @@ import numpy as np
 import math
 import keydifferentiator.AD as ad
 
-# todo: Exponentials
-# Should be able to handle any base
-
-# todo: Logistic function
-# Again, this can be formed from the natural exponential
-
 def exp(x):
     """ Calculate the exponential of the input AD object, integer, or float
     
@@ -80,6 +74,28 @@ def log(x, base):
         return ad.AD(math.log(x.val, base), x.der/(x.val*np.log(base)))
     except AttributeError:
         return math.log(x,base)
+
+def logistic(x):
+    """ Return the logistic of an AD object, integer, or float
+
+    INPUTS
+    =======
+    x: the AD object, int, or float
+
+    RETURNS
+    ========
+    result: 1/(1+e^(-x))
+
+    EXAMPLES
+    =========
+    >>> x = ad.AD(4.0)
+    >>> print(logistic(x))
+    AD(0.9820137900379085, [0.0183095])
+    """
+    try:
+        return ad.AD(1/(1+np.exp(-x.val)), np.exp(-x.val)*x.der/(1+np.exp(-x.val)**2))
+    except AttributeError:
+        return 1/(1+np.exp(-x))
 
 def sqrt(x):
     """ Calculate the square root of the input AD object, integer, or float
