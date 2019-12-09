@@ -7,7 +7,6 @@ from pytest import approx, raises
 
 def test_add_Rev_Rev():
     x = Reverse(2.0) + Reverse(3.0)
-    print(x)
     y = Reverse(5.0)
     assert(x == y)
 
@@ -79,6 +78,13 @@ def test_pow_reg_Rev():
     x = 2**Reverse(2.0)
     assert(x.value == 4.0)
 
+def test_addition():
+    x = Reverse(3)
+    f = 4 * x - 6
+    f.gradient_value = 1.0
+    assert f.value == approx(6)
+    assert x.get_gradient() == approx(4)
+
 def test_add_radd_mult_rmult():
     x = Reverse(2.0)
     alpha = 2.0
@@ -91,19 +97,22 @@ def test_add_radd_mult_rmult():
     functions.append(('beta + x * alpha', beta + x * alpha))
 
     for (name, value) in functions:
+        value.gradient_value = 1.0
         assert (value.value == 7)
+        assert (x.get_gradient() == approx(2))
 
 def test_linear_combos():
     x = Reverse(3.0)
     eq = x**2 + x
-    y = Reverse(12.0)
-    assert(eq == y)
+    eq.gradient_value = 1.0
+    assert(eq.value == 12)
+    assert(x.get_gradient() == 7)
 
 def test_identity():
     x = Reverse(3.0)
     eq = (2 * x) / (2 * x)
-    y = Reverse(1.0)
-    assert(eq == y)
+    assert(eq.value == 1)
+    assert(eq.get_gradient() == 0)
 
 def test_str():
     x = Reverse(5)
@@ -186,8 +195,6 @@ def test_sub_Rev():
 
 def test_sqrt_pow():
     x = Reverse(4.0)
-    print(sqrt(x**2).value)
-    print(sqrt(x**2).gradient_value)
     assert(sqrt(x**2) == Reverse(4.0))
 
 def test_tan():
@@ -217,3 +224,10 @@ def test_cosec():
     f.gradient_value = 1.0
     assert f.value == approx(1 / np.sin(-1))
     assert x.get_gradient() == approx(-1 / np.tan(-1) / np.sin(-1))
+
+def test_log2_log10():
+    x = Reverse(3)
+    f = log2(x) + log10(x)
+    f.gradient_value = 1.0
+    assert f.value == approx(np.log2(3) + np.log10(3))
+    assert x.get_gradient() == approx(1 / (3 * np.log(10)) + 1 / (3 * np.log(2)))
