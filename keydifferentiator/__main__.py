@@ -1,6 +1,14 @@
 # __main__.py
 
-import keydifferentiator.diff as d
+import re
+import keydifferentiator.AD as ad
+from keydifferentiator.unary import *
+
+def diff(f, x):
+	eq = re.sub('x', 'ad.AD(x)', f)
+	eq = re.sub('x', str(x), eq)
+	result = eval(eq)
+	return (result.val, result.der)
 
 def main():
 	while True:
@@ -11,7 +19,7 @@ def main():
 		print("Evaluating f(x) = %s at x = %f..." % (f, float(x)))
 
 		try: 
-			result = d.diff(f, x)
+			result = diff(f, x)
 			print("f(x) = %f, f'(x) = %f" % (result[0], result[1]))
 		except:
 			print("Cannot evaluate f(x) = %s at x = %d." % (f, float(x)))
@@ -21,4 +29,3 @@ def main():
 
 if __name__ == "__main__":
 	main()
-
