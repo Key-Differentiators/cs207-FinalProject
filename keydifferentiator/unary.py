@@ -93,7 +93,7 @@ def logistic(x):
     AD(0.9820137900379085, [0.0183095])
     """
     try:
-        return ad.AD(1/(1+np.exp(-x.val)), np.exp(-x.val)*x.der/(1+np.exp(-x.val)**2))
+        return ad.AD(1/(1+np.exp(-x.val)), np.exp(-x.val)*x.der/(1+np.exp(-x.val))**2)
     except AttributeError:
         return 1/(1+np.exp(-x))
 

@@ -39,7 +39,7 @@ def test_log2_num():
 
 def test_logistic_AD():
 	assert(unary.logistic(ad.AD(4.0)).val == (1/(1+np.exp(-4))))
-	assert(unary.logistic(ad.AD(4.0)).der == pytest.approx(0.0183, 0.001))
+	assert(unary.logistic(ad.AD(2.0)).der == pytest.approx(0.1049936, 0.001))
 
 def test_logstic_num():
 	assert(unary.logistic(3) == (1/(1+np.exp(-3))))
