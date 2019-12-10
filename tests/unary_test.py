@@ -2,21 +2,14 @@
 
 import pytest
 import numpy as np
+import math
 from keydifferentiator import AD as ad
 from keydifferentiator import unary
 
-def test_neg_AD():
-	x = unary.neg(ad.AD(5.0))
-	y = ad.AD(-5.0, -1.0)
-	assert (x == y)
-
-def test_neg_num():
-	assert(unary.neg(5.0) == -5.0)
-
 def test_exp_AD():
 	x = unary.exp(ad.AD(4.0))
-	assert (x.val == pytest.approx(54.5981, 0.001))
-	assert (x.der == pytest.approx(54.5981, 0.001))
+	assert(x.val == pytest.approx(54.5981, 0.001))
+	assert(x.der == pytest.approx(54.5981, 0.001))
 
 def test_exp_num():
 	assert (unary.exp(4.0) == np.exp(4.0))
@@ -24,17 +17,32 @@ def test_exp_num():
 def test_sqrt_AD():
 	x = unary.sqrt(ad.AD(4.0))
 	y = ad.AD(2.0, 1/4)
-	assert (x == y)
+	assert(x == y)
 
 def test_sqrt_num():
 	assert(unary.sqrt(4.0) == np.sqrt(4.0))
 
 def test_ln_AD():
-	assert (unary.ln(ad.AD(4.0)).val == pytest.approx(1.3862, 0.001))
-	assert (unary.ln(ad.AD(4.0)).der == pytest.approx(0.25, 0.001))
+	assert(unary.ln(ad.AD(4.0)).val == pytest.approx(1.3862, 0.001))
+	assert(unary.ln(ad.AD(4.0)).der == pytest.approx(0.25, 0.001))
 
 def test_ln_num():
 	assert(unary.ln(4.0) == np.log(4.0))
+
+def test_log2_AD():
+	x = unary.log(ad.AD(4.0),2)
+	assert(x.val == math.log(4.0,2))
+	assert(x.der == 1/(4*unary.ln(2)))
+
+def test_log2_num():
+	assert(unary.log(4.0,2) == math.log(4.0,2))
+
+def test_logistic_AD():
+	assert(unary.logistic(ad.AD(4.0)).val == (1/(1+np.exp(-4))))
+	assert(unary.logistic(ad.AD(2.0)).der == pytest.approx(0.1049936, 0.001))
+
+def test_logstic_num():
+	assert(unary.logistic(3) == (1/(1+np.exp(-3))))
 
 def test_sin_AD():
 	assert(unary.sin(ad.AD(3.0)).val == pytest.approx(0.1411, 0.001))
@@ -64,12 +72,20 @@ def test_arcsin_AD():
 def test_arcsin_num():
 	assert(unary.arcsin(0.5) == pytest.approx(0.5235, 0.001))
 
+def test_arcsin_exception():
+	with pytest.raises(Exception, match="X out of domain"):
+		assert unary.arcsin(ad.AD(-2))
+
 def test_arccos_AD():
 	assert(unary.arccos(ad.AD(0.5)).val == pytest.approx(1.0472, 0.001))
 	assert(unary.arccos(ad.AD(0.5)).der == pytest.approx(-1.1547, 0.001))
 
 def test_arccos_num():
 	assert(unary.arccos(0.5) == pytest.approx(1.0472, 0.001))
+
+def test_arccos_exception():
+	with pytest.raises(Exception, match="X out of domain"):
+		assert unary.arccos(ad.AD(3))
 
 def test_arctan_AD():
 	assert(unary.arctan(ad.AD(0.5)).val == pytest.approx(0.4636, 0.001))
