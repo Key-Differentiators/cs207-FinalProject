@@ -9,7 +9,7 @@ setup(
     author='Kate Grosch, Spencer Penn, Mingyue Wei',
     packages=['keydifferentiator'],
     install_requires=['numpy', 'regex'],
-    version='1.1',
+    version='1.1.1',
     license='MIT',
     description='Automatic differentiation tool',
     long_description=open('README.md').read(),
