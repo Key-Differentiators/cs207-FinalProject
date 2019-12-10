@@ -17,10 +17,10 @@ def main():
 		if f == 'q':
 			break;
 		x = input("What value of x would you like to evaluate at? Enter a number: ")
-		print("Evaluating f(x) = %s at x = %f using %s mode..." % (f, float(x)))
+		print("Evaluating f(x) = %s at x = %f" % (f, float(x)))
 
 		try: 
-			result = diff(f, x, method)
+			result = diff(f, x)
 			print("f(x) = %f, f'(x) = %f" % (result[0], result[1]))
 		except:
 			print("Cannot evaluate f(x) = %s at x = %d." % (f, float(x)))
